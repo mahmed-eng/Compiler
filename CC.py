@@ -2,6 +2,7 @@ import keyword
 import re
 import tkinter as tk
 from tkinter import filedialog
+
 from lark import Lark
 
 # Define a simple CFG for illustration purposes
@@ -25,7 +26,9 @@ def tokenize_python_file(file_path):
             for word in words:
                 if keyword.iskeyword(word):
                     tokens.append(f"{word} -> keyword, line number: {line_number}")
-                elif word in {'int', 'float', 'str', 'bool', 'list', 'tuple', 'dict', 'set'}:
+                elif word in {'if', 'else'}:
+                    tokens.append(f"{word} -> keyword, line number: {line_number}")
+                elif word in {'int', 'str', 'float'}:
                     tokens.append(f"{word} -> datatype, line number: {line_number}")
                 elif re.match(r'^[a-zA-Z_]\w*$', word):
                     tokens.append(f"{word} -> identifier, line number: {line_number}")
@@ -35,6 +38,30 @@ def tokenize_python_file(file_path):
                     tokens.append(f"{word} -> punctuator, line number: {line_number}")
 
     return tokens
+
+def tokenize_text_file(file_path):
+    tokens = []
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+
+        for line_number, line in enumerate(lines, start=1):
+            # Tokenizing text code
+            words = re.findall(r'\b\w+\b|[^\w\s]', line)
+            for word in words:
+                if re.match(r'^\d+$', word):
+                    tokens.append(f"{word} -> numeric, line number: {line_number}")
+                else:
+                    tokens.append(f"{word} -> word, line number: {line_number}")
+
+    return tokens
+
+def tokenize_file(file_path):
+    if file_path.lower().endswith('.py'):
+        return tokenize_python_file(file_path)
+    elif file_path.lower().endswith('.txt'):
+        return tokenize_text_file(file_path)
+    else:
+        raise ValueError("Unsupported file format")
 
 def left_factor_grammar(tokens):
     left_factored_grammar = "S -> "
@@ -56,9 +83,9 @@ def generate_parse_tree(tokens):
     return parse_tree
 
 def browse_file():
-    file_path = filedialog.askopenfilename(filetypes=[("Python files", "*.py")])
+    file_path = filedialog.askopenfilename(filetypes=[("Python files", "*.py"), ("Text files", "*.txt")])
     if file_path:
-        tokens = tokenize_python_file(file_path)
+        tokens = tokenize_file(file_path)
         result_text.config(state=tk.NORMAL)
         result_text.delete(1.0, tk.END)
         for token in tokens:
@@ -100,7 +127,7 @@ def display_parse_tree():
 
 # Create the main window
 root = tk.Tk()
-root.title("C++ Code Tokenizer")
+root.title("Code Tokenizer")
 
 # Create and configure widgets
 browse_button = tk.Button(root, text="Tokenize a file", command=browse_file)
