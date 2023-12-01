@@ -1,0 +1,54 @@
+import re
+
+class Token:
+    def __init__(self, token_class, value, line_number):
+        self.token_class = token_class
+        self.value = value
+        self.line_number = line_number
+
+def tokenize_line(line, line_number):
+    tokens = []
+    # Define regular expressions for different token types
+    token_patterns = [
+        (r'\+\+', 'inc_dec operator'),
+        (r'--', 'dec operator'),
+        (r'\+\+=', 'assignment operator'),
+        (r'=', 'assignment operator'),
+        (r'==', 'comparison operator'),
+        (r'!=', 'comparison operator'),
+        (r'\+', 'arithmetic operator'),
+        (r'-', 'arithmetic operator'),
+        (r'!', 'not operator'),
+        (r'for|if|else-if|while', 'keyword'),
+        (r'"[^"]*"', 'String'),
+        (r"'[a-zA-Z]'", 'char'),
+        (r'//.*', 'single line comment'),
+        (r'\b(?:[0-9]+)\b', 'int_const'),
+    ]
+
+    for pattern, token_class in token_patterns:
+        matches = re.finditer(pattern, line)
+        for match in matches:
+            value = match.group(0)
+            tokens.append(Token(token_class, value, line_number))
+
+    return tokens
+
+def tokenize_file(file_path):
+    tokens = []
+    with open(file_path, 'r') as file:
+        for line_number, line in enumerate(file, start=1):
+            line_tokens = tokenize_line(line, line_number)
+            tokens.extend(line_tokens)
+
+    return tokens
+
+# Example usage with the specified file path
+file_path = r'C:\Users\Azharuddin\Downloads\Python\custom\sample.txt'
+tokens = tokenize_file(file_path)
+
+# Displaying the tokens
+for token in tokens:
+    print(f"Class Part: {token.token_class}, Value Part: {token.value}, Line Number: {token.line_number}")
+
+# Developer: M.Ahmed Hashmi
