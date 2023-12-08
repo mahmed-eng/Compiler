@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .tree {
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
+        .tree ul {
+            padding-top: 20px;
+            position: relative;
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+        }
+
+        .tree li {
+            float: left;
+            text-align: center;
+            list-style-type: none;
+            position: relative;
+            padding: 20px 5px 0 5px;
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+        }
+
+        .tree li::before,
+        .tree li::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 50%;
+            border-top: 1px solid #ccc;
+            width: 50%;
+            height: 20px;
+        }
+
+        .tree li::after {
+            right: auto;
+            left: 50%;
+            border-left: 1px solid #ccc;
+        }
+
+        .tree li:only-child::after,
+        .tree li:only-child::before {
+            display: none;
+        }
+
+        .tree li:only-child {
+            padding-top: 0;
+        }
+
+        .tree li:first-child::before,
+        .tree li:last-child::after {
+            border: 0 none;
+        }
+
+        .tree li:last-child::before {
+            border-right: 1px solid #ccc;
+            border-radius: 0 5px 0 0;
+            -webkit-border-radius: 0 5px 0 0;
+            -moz-border-radius: 0 5px 0 0;
+        }
+
+        .tree li:first-child::after {
+            border-radius: 5px 0 0 0;
+            -webkit-border-radius: 5px 0 0 0;
+            -moz-border-radius: 5px 0 0 0;
+        }
+
+        .tree ul ul::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            border-left: 1px solid #ccc;
+            width: 0;
+            height: 20px;
+        }
+
+        .tree li div {
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            text-decoration: none;
+            color: #666;
+            font-family: arial, verdana, tahoma;
+            font-size: 11px;
+            display: inline-block;
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+        }
+
+        .tree li div:hover,
+        .tree li div:hover+ul li div {
+            background: #c8e4f8;
+            color: #000;
+            border: 1px solid #94a0b4;
+        }
+
+        .tree li div:hover+ul li::after,
+        .tree li div:hover+ul li::before,
+        .tree li div:hover+ul::before,
+        .tree li div:hover+ul ul::before {
+            border-color: #94a0b4;
+        }
+
+        code {
+            display: block;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-family: "Courier New", monospace;
+        }
+
+        /* Media queries for responsiveness */
+        @media only screen and (max-width: 800px) {
+            .tree li div {
+                padding: 5px;
+                font-size: 10px;
+            }
+
+            .tree li div:hover,
+            .tree li div:hover+ul li div {
+                background: #c8e4f8;
+                color: #000;
+                border: 1px solid #94a0b4;
+            }
+        }
+
+        @media only screen and (max-width: 600px) {
+            .tree li div {
+                padding: 3px;
+                font-size: 8px;
+            }
+        }
+
+        button {
+            
+            text-decoration: none;
+                   padding: 0;
+                   font-family: inherit;
+                   cursor: pointer;
+                   color: blue; /* Set the color you want for the link */
+                   text-decoration: none; /* Remove underline */
+                   border-radius: round;
+               }
+    </style>
+    <title>Tree and Code Example</title>
+</head>
+
+<body>
+<div>
+    <button><a href="Syntax.html">Syntax Tree</a></button>
+
+    <div class="tree">
+        <ul>
+            <li>
+                <div>
+                    <input type="checkbox">Program
+                </div>
+                <!-- Declaration -->
+                <ul>
+                    <li>
+                        <div>
+                            <input type="checkbox">Declaration
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <input type="checkbox">Statements
+                        </div>
+                        <ul>
+                            <li>
+                                <div>
+                                    <input type="checkbox">Assignment <font color="red">(a = 2)</font>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div>
+                                            <input type="checkbox">Variable <font color="red">(a)</font>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <input type="checkbox">Constant <font color="red">(2)</font>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div>
+                                    <input type="checkbox">Assignment <font color="red">(b = 3)</font>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div>
+                                            <input type="checkbox">Variable <font color="red">(b)</font>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <input type="checkbox">Costant <font color="red">(3)</font>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div>
+                                    <input type="checkbox">Assignment <font color="red">(c = "Ahmed")</font>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div>
+                                            <input type="checkbox">Variable <font color="red">(c)</font>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <input type="checkbox"> String Literal <font color="red">("Ahmed")</font>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div>
+                                    <input type="checkbox">Assignment <font color="red">(d = a + b + c)</font>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div>
+                                            <input type="checkbox">Variable <font color="red">(d)</font>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <input type="checkbox">Addition
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <div>
+                                                    <input type="checkbox">Variable <font color="red">(a)</font>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div>
+                                                    <input type="checkbox">Variable <font color="red">(a)</font>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div>
+                                                    <input type="checkbox">Variable <font color="red">(a)</font>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div>
+                            <input type="checkbox">Print Statement
+                        </div>
+                        <ul>
+                            <li>
+                                <div>
+                                    <input type="checkbox">String Literal <font color="red">("Result")</font>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <input type="checkbox">Variable <font color="red">(d)</font>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+
+</html>

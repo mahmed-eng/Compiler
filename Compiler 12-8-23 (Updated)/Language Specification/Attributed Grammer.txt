@@ -1,0 +1,240 @@
+make this code "import re
+import tkinter as tk
+from tkinter import filedialog
+
+class Token:
+    def __init__(self, token_class, value, line_number):
+        self.token_class = token_class
+        self.value = value
+        self.line_number = line_number
+
+class Attribute:
+    def __init__(self, attribute_type, value):
+        self.attribute_type = attribute_type
+        self.value = value
+
+def tokenize_line(line, line_number):
+    tokens = []
+    token_patterns = [
+        # ... (same token patterns as before)
+    ]
+
+    for pattern, token_class in token_patterns:
+        matches = re.finditer(pattern, line)
+        for match in matches:
+            value = match.group(0)
+            tokens.append(Token(token_class, value, line_number))
+
+    return tokens
+
+def tokenize_file(file_path):
+    tokens = []
+    with open(file_path, 'r') as file:
+        for line_number, line in enumerate(file, start=1):
+            line_tokens = tokenize_line(line, line_number)
+            tokens.extend(line_tokens)
+
+    return tokens
+
+def browse_file():
+    file_path = filedialog.askopenfilename(filetypes=[("Text files", "*.txt")])
+    if file_path:
+        file_path_entry.delete(0, tk.END)
+        file_path_entry.insert(0, file_path)
+
+def analyze_semantics():
+    file_path = file_path_entry.get()
+    tokens = tokenize_file(file_path)
+
+    # Perform semantic analysis and attribute generation
+    # This is a simplified example for arithmetic expressions
+    attribute_rules = {
+        'expression': Attribute('type', 'int'),
+        'expression_prime': Attribute('type', 'int'),
+        'term': Attribute('type', 'int'),
+        'term_prime': Attribute('type', 'int'),
+        'factor': Attribute('type', 'int'),
+        'identifier': Attribute('type', 'variable'),
+        'int_const': Attribute('type', 'int'),
+        'plus_op': Attribute('operator', '+'),
+        'minus_op': Attribute('operator', '-'),
+        'multiply_op': Attribute('operator', '*'),
+        'divide_op': Attribute('operator', '/'),
+    }
+
+    result_text.delete(1.0, tk.END)
+    for token in tokens:
+        if token.token_class in attribute_rules:
+            attribute = attribute_rules[token.token_class]
+            result_text.insert(tk.END, f"{token.token_class}: {token.value} - {attribute.attribute_type}: {attribute.value}\n")
+
+# Create the main window
+root = tk.Tk()
+root.title("Attributed CFG Generation App")
+
+# Create and configure the GUI components
+file_path_label = tk.Label(root, text="File Path:")
+file_path_label.pack(pady=5)
+
+file_path_entry = tk.Entry(root, width=50)
+file_path_entry.pack(pady=5)
+
+browse_button = tk.Button(root, text="Browse", command=browse_file)
+browse_button.pack(pady=10)
+
+analyze_button = tk.Button(root, text="Generate Attributed CFG", command=analyze_semantics)
+analyze_button.pack(pady=10)
+
+result_text = tk.Text(root, height=20, width=80)
+result_text.pack()
+
+# Start the main loop
+root.mainloop()
+" able to generate cfg form txt file for example if a txt file containing this type of program "# Define the abstract class
+class AbstractClass:
+    def abstract_method(self):
+        raise NotImplementedError("Subclasses must implement this method")
+
+# Define a sealed class
+class SealedClass:
+    def sealed_method(self):
+        print("Method from SealedClass")
+
+# Define the first parent class with a destructor
+class Parent1:
+    def __init__(self):
+        print("Constructor of Parent1")
+
+    def method1(self):
+        print("Method from Parent1")
+
+    def __del__(self):
+        print("Destructor of Parent1")
+
+# Define the second parent class with a static method
+class Parent2:
+    @staticmethod
+    def static_method():
+        print("Static method from Parent2")
+
+# Define the child class that inherits from multiple parents and the abstract class
+class Child(AbstractClass, SealedClass, Parent1, Parent2):
+    def __init__(self):
+        super().__init__()
+        print("Constructor of Child")
+
+    def child_method(self):
+        print("Method from Child")
+
+    def abstract_method(self):
+        print("Implementation of abstract_method in Child")
+
+    def __del__(self):
+        print("Destructor of Child")
+
+    # Operator overloading
+    def __add__(self, other):
+        if isinstance(other, Child):
+            return "Combining instances of Child"
+        else:
+            return NotImplemented
+
+# Example of multidimensional array
+multi_array = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+# Try-catch block
+try:
+    result = 10 / 0
+except ZeroDivisionError as e:
+    print(f"Caught an exception: {e}")
+finally:
+    print("Finally block executed")
+
+# Create an instance of the Child class
+child_instance = Child()
+
+# Access methods from Parent1
+child_instance.method1()
+
+# Access methods from Parent2
+child_instance.static_method()
+
+# Access methods from SealedClass
+child_instance.sealed_method()
+
+# Access method from Child
+child_instance.child_method()
+
+# Access overridden abstract method
+child_instance.abstract_method()
+
+# Access multidimensional array
+print("Element at [1][2]:", multi_array[1][2])
+
+# Use operator overloading
+result = child_instance + child_instance
+print(result)
+" then program will convert this in to this "<program>      -> <class_definition> <stmts> <try_catch_block> <instance_creation> <method_accesses> <array_access> <operator_overloading>
+
+<class_definition> -> class AbstractClass : <class_body> class SealedClass : <class_body> class Parent1 : <class_body> class Parent2 : <class_body> class Child : <class_body>
+
+<class_body>   -> <method_definition> | <staticmethod_definition> | <constructor_definition> | <destructor_definition>
+
+<method_definition> -> def <method_name> ( <parameters> ) : <method_body>
+
+<staticmethod_definition> -> @staticmethod def <method_name> ( <parameters> ) : <method_body>
+
+<constructor_definition> -> def __init__ ( self ) : <method_body>
+
+<destructor_definition> -> def __del__ ( self ) : <method_body>
+
+<method_name>  -> <identifier>
+
+<parameters>   -> <identifier>
+
+<method_body>  -> <statements>
+
+<stmts>        -> <statements> | ε
+
+<statements>   -> <statement> <statements> | ε
+
+<statement>    -> <expression> | print ( <expression> )
+
+<expression>   -> <term> | <expression> + <term>
+
+<term>         -> <factor> | <term> * <factor>
+
+<factor>       -> <identifier> | <literal> | ( <expression> ) | <method_call>
+
+<literal>      -> <number> | <string>
+
+<number>       -> <digit>+
+
+<digit>        -> 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+
+<string>       -> " <characters> "
+
+<characters>   -> <character> <characters> | ε
+
+<character>    -> any valid character
+
+<method_call>  -> <identifier> ( <arguments> )
+
+<arguments>    -> <expression> | <expression> , <arguments>
+
+<try_catch_block> -> try : <statements> except <exception_type> as <exception_var> : <statements> finally : <statements>
+
+<exception_type> -> <identifier>
+
+<exception_var> -> <identifier>
+
+<instance_creation> -> <identifier> = <identifier> ( )
+
+<method_accesses> -> <identifier> . <method_name> ( ) | <identifier> . <identifier> . <method_name> ( )
+
+<array_access> -> print ( "Element at [1][2]:" , <identifier> [ <number> ] [ <number> ] )
+
+<operator_overloading> -> <identifier> = <identifier> + <identifier>
+
+<identifier>   -> any valid identifier
+" but make this logic dynamic dont hardcode

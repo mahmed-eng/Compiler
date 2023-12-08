@@ -1,0 +1,2 @@
+
+In this, within tok2, you will need to go into the subprocess to set the path for the syntax file and semantic file and add syntax.html path in webbrowser. After that, these links will be established. If it is run separately, they should work fine.
