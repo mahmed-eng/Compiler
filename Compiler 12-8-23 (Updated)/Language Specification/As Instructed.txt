@@ -1,0 +1,84 @@
+# Define the abstract class
+class AbstractClass:
+    def abstract_method(self):
+        raise NotImplementedError("Subclasses must implement this method")
+
+# Define a sealed class
+class SealedClass:
+    def sealed_method(self):
+        print("Method from SealedClass")
+
+# Define the first parent class with a destructor
+class Parent1:
+    def __init__(self):
+        print("Constructor of Parent1")
+
+    def method1(self):
+        print("Method from Parent1")
+
+    def __del__(self):
+        print("Destructor of Parent1")
+
+# Define the second parent class with a static method
+class Parent2:
+    @staticmethod
+    def static_method():
+        print("Static method from Parent2")
+
+# Define the child class that inherits from multiple parents and the abstract class
+class Child(AbstractClass, SealedClass, Parent1, Parent2):
+    def __init__(self):
+        super().__init__()
+        print("Constructor of Child")
+
+    def child_method(self):
+        print("Method from Child")
+
+    def abstract_method(self):
+        print("Implementation of abstract_method in Child")
+
+    def __del__(self):
+        print("Destructor of Child")
+
+    # Operator overloading
+    def __add__(self, other):
+        if isinstance(other, Child):
+            return "Combining instances of Child"
+        else:
+            return NotImplemented
+
+# Example of multidimensional array
+multi_array = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+# Try-catch block
+try:
+    result = 10 / 0
+except ZeroDivisionError as e:
+    print(f"Caught an exception: {e}")
+finally:
+    print("Finally block executed")
+
+# Create an instance of the Child class
+child_instance = Child()
+
+# Access methods from Parent1
+child_instance.method1()
+
+# Access methods from Parent2
+child_instance.static_method()
+
+# Access methods from SealedClass
+child_instance.sealed_method()
+
+# Access method from Child
+child_instance.child_method()
+
+# Access overridden abstract method
+child_instance.abstract_method()
+
+# Access multidimensional array
+print("Element at [1][2]:", multi_array[1][2])
+
+# Use operator overloading
+result = child_instance + child_instance
+print(result)
